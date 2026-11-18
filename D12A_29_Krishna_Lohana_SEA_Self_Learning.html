@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Engineering & Architecture — Self Learning Report | Krishna Lohana (Roll 29, D12A)</title>
+<style>
+  :root {
+    --primary: #1e3a8a;
+    --primary-light: #3b82f6;
+    --primary-dark: #0f172a;
+    --accent: #0284c7;
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --code-bg: #0f172a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.65;
+    color: var(--text-main);
+    background-color: var(--bg-page);
+    padding: 2.5rem 1rem;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    padding: 3.5rem 3.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+  }
+  
+  /* Header & Banner */
+  .header-card {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+  .inst-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .dept-title {
+    font-size: 1.05rem;
+    color: var(--primary-light);
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+  .doc-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-top: 1.25rem;
+    line-height: 1.2;
+  }
+  .doc-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+  
+  /* Student Profile Card */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background: #f1f5f9;
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    text-align: left;
+    border: 1px solid #cbd5e1;
+  }
+  .profile-item {
+    font-size: 0.92rem;
+  }
+  .profile-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+  .profile-value {
+    font-weight: 700;
+    color: var(--primary-dark);
+    font-size: 1rem;
+    margin-top: 0.15rem;
+  }
+
+  /* Table of Contents */
+  .toc-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--primary);
+    padding: 1.5rem 2rem;
+    border-radius: 6px;
+    margin: 2rem 0;
+  }
+  .toc-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 0.75rem;
+  }
+  .toc-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.5rem;
+  }
+  .toc-list li a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .toc-list li a:hover {
+    text-decoration: underline;
+  }
+
+  /* Headings */
+  h1 {
+    font-size: 1.85rem;
+    color: var(--primary);
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+  }
+  h2 {
+    font-size: 1.35rem;
+    color: var(--primary-dark);
+    margin-top: 1.85rem;
+    margin-bottom: 0.75rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+    color: #334155;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    margin-bottom: 1rem;
+    color: #334155;
+    font-size: 1rem;
+  }
+  ul, ol {
+    margin-left: 1.75rem;
+    margin-bottom: 1.25rem;
+    color: #334155;
+  }
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
+  }
+  th {
+    background-color: var(--primary);
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.85rem 1rem;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+    color: #334155;
+  }
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+  tr:hover td {
+    background-color: #f1f5f9;
+  }
+
+  /* Badges & Tags */
+  .badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .badge-success { background: #dcfce7; color: #15803d; }
+  .badge-primary { background: #dbeafe; color: #1e40af; }
+  .badge-warning { background: #fef3c7; color: #b45309; }
+
+  /* Code & Gherkin blocks */
+  pre {
+    background: var(--code-bg);
+    color: #f8fafc;
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 1.25rem 0;
+    border: 1px solid #1e293b;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+
+  /* Callout Card */
+  .callout {
+    background: #eff6ff;
+    border-left: 4px solid var(--primary-light);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1.25rem 0;
+  }
+  .callout-title {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+  }
+
+  /* Print Media Optimizations */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .container { max-width: 100%; border: none; box-shadow: none; padding: 0; }
+    h1 { page-break-before: always; margin-top: 1.5rem; }
+    table, pre, .profile-grid, .callout { page-break-inside: avoid; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header Card -->
+  <div class="header-card">
+    <div class="inst-title">Vivekanand Education Society's Institute of Technology (VESIT)</div>
+    <div class="dept-title">Department of Computer Engineering | Academic Year 2026–2027</div>
+    <div class="doc-title">Software Engineering & Architecture</div>
+    <div class="doc-subtitle">Comprehensive Self-Learning Activities Report (Modules 1 through 6)</div>
+    
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="profile-label">Student Name</div>
+        <div class="profile-value">Krishna Lohana</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-label">Roll Number</div>
+        <div class="profile-value">29</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-label">Class & Division</div>
+        <div class="profile-value">D12A (Semester V)</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-label">Subject & Code</div>
+        <div class="profile-value">SEA (CSC501)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc-box">
+    <div class="toc-title">Table of Contents</div>
+    <ul class="toc-list">
+      <li><a href="#act-1">1. Comparison of Agile and DevOps</a></li>
+      <li><a href="#act-2">2. Case Study: JIRA and Asana in Real Projects</a></li>
+      <li><a href="#act-3">3. Writing User Stories & Acceptance Criteria</a></li>
+      <li><a href="#act-4">4. Advanced Requirement Elicitation</a></li>
+      <li><a href="#act-5">5. Requirement Traceability Matrix (RTM)</a></li>
+      <li><a href="#act-6">6. Tools for Requirement Management</a></li>
+      <li><a href="#act-7">7. Overall SDLC Integration & Synthesis</a></li>
+      <li><a href="#act-8">8. Conclusion & References</a></li>
+    </ul>
+  </div>
+
+  <!-- ACTIVITY 1 -->
+  <h1 id="act-1">1. Comparison of Agile and DevOps</h1>
+  
+  <h2>1.1 Introduction and Core Philosophy</h2>
+  <p>In modern software engineering, high-velocity and high-reliability software delivery requires eliminating organizational silos and aligning architectural modularity with team communication structures (Conway's Law). <strong>Agile</strong> and <strong>DevOps</strong> are the two foundational paradigms governing contemporary software lifecycles.</p>
+  
+  <p><strong>Agile:</strong> Established by the <em>Agile Manifesto (2001)</em> to counter the rigid, document-heavy Waterfall model. It emphasizes four core values: individuals and interactions over processes and tools, working software over comprehensive documentation, customer collaboration over contract negotiation, and responding to change over following a plan. It decomposes development into time-boxed iterations (sprints, typically 1–4 weeks).</p>
+  
+  <p><strong>DevOps:</strong> Introduced in 2009 by Patrick Debois and Gene Kim to dissolve the organizational "Wall of Confusion" between Development (who prioritize frequent change) and Operations (who prioritize runtime stability). DevOps is structured around the <strong>CALMS</strong> framework: Culture (shared end-to-end ownership), Automation (CI/CD, IaC), Lean (small batch sizes), Measurement (telemetry, MTTR), and Sharing (blameless post-mortems).</p>
+
+  <div class="callout">
+    <div class="callout-title">Architectural Equation of Modern Software Delivery</div>
+    <p><strong>Modern Delivery</strong> = <strong>Agile</strong> (Speed of Ideation & Requirements Alignment) + <strong>DevOps</strong> (Speed & Operational Safety of Automated Execution).</p>
+  </div>
+
+  <h2>1.2 Lifecycle Architectures and Flow</h2>
+  <pre><code>AGILE SPRINT LIFECYCLE:
+Product Backlog ──> Sprint Planning ──> Sprint Backlog ──> Daily Standups ──> Sprint Review ──> Retrospective
+       ▲                                                                                            │
+       └──────────────────────── Continuous Feedback & Backlog Refinement ──────────────────────────┘
+
+DEVOPS CONTINUOUS INFINITE-LOOP LIFECYCLE:
+PLAN ──> CODE ──> BUILD ──> TEST ──> RELEASE ──> DEPLOY ──> OPERATE ──> MONITOR ──> (Feeds Plan)</code></pre>
+
+  <h2>1.3 Deep Multi-Dimensional Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Dimension</th>
+        <th>Agile Methodology</th>
+        <th>DevOps Paradigm</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Core Philosophy</strong></td>
+        <td>Customer collaboration, rapid adaptation, and iterative incremental development.</td>
+        <td>Systems thinking, shared operational responsibility, automation, and continuous delivery.</td>
+      </tr>
+      <tr>
+        <td><strong>Primary Scope</strong></td>
+        <td>Requirement definition, architectural modeling, sprint backlog management, and coding/testing.</td>
+        <td>End-to-end software delivery: build, IaC, deployment, observability, and runtime operations.</td>
+      </tr>
+      <tr>
+        <td><strong>Team Composition</strong></td>
+        <td>Cross-functional feature teams: Product Owner, Scrum Master, UI/UX, Developers, QA.</td>
+        <td>Cross-functional platform teams: Developers, Site Reliability Engineers (SRE), Cloud Architects, Security.</td>
+      </tr>
+      <tr>
+        <td><strong>Delivery Cadence</strong></td>
+        <td>Cadence-driven: Potentially shippable increment at sprint end (1–4 weeks).</td>
+        <td>Flow-driven: Continuous on-demand deployments (multiple times daily/weekly).</td>
+      </tr>
+      <tr>
+        <td><strong>Quality Focus</strong></td>
+        <td>Functional correctness, user story acceptance criteria, business logic.</td>
+        <td>System resilience, security (DevSecOps), zero-downtime releases, MTTR.</td>
+      </tr>
+      <tr>
+        <td><strong>Primary Metrics</strong></td>
+        <td>Sprint Velocity, Story Point Burndown, Sprint Goal Completion.</td>
+        <td>DORA Metrics: Deployment Frequency, Lead Time for Changes, Change Failure Rate, MTTR.</td>
+      </tr>
+      <tr>
+        <td><strong>Handling Changes</strong></td>
+        <td>Accommodates changes during sprint backlog grooming.</td>
+        <td>Accommodates changes continuously via automated CI/CD and feature flags.</td>
+      </tr>
+      <tr>
+        <td><strong>Primary Toolchain</strong></td>
+        <td>JIRA, Asana, Linear, Confluence, Trello.</td>
+        <td>Git, Docker, Kubernetes, GitHub Actions, Terraform, Prometheus, Datadog.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>1.4 Synergy in Real Enterprise Systems: StaySync Hospitality</h2>
+  <p>In the StaySync Integrated Hospitality System, Agile and DevOps operate in tandem:</p>
+  <ul>
+    <li><strong>Agile:</strong> In Sprint 3, the product team breaks down payment processing into user stories. Engineers commit to implementing the Factory Method design pattern for Cash, Card, and UPI gateways.</li>
+    <li><strong>DevOps:</strong> On code commit to GitHub, an automated CI/CD pipeline runs Flake8 linting, executes PyTest basis path tests (100% path coverage), and validates Pact API contracts. On pull request merge, a Docker container is automatically staged and deployed with zero downtime.</li>
+  </ul>
+
+  <!-- ACTIVITY 2 -->
+  <h1 id="act-2">2. Case Study of JIRA and Asana in Real Projects</h1>
+  
+  <h2>2.1 In-Depth Case Study: Atlassian JIRA</h2>
+  <p>Atlassian JIRA is the industry-standard project and issue tracking system built specifically for software engineering teams. Its core strength lies in its deterministic, configurable finite state machine.</p>
+
+  <h3>Structural Data Hierarchy</h3>
+  <pre><code>Theme (Strategic Business Vision)
+  └── Epic (Large Subsystem / Feature Initiative)
+        ├── User Story (Functional End-User Requirement with Story Points)
+        │     ├── Sub-Task (Frontend Component Implementation)
+        │     └── Sub-Task (Backend REST API Endpoint & Database Migration)
+        └── Bug / Defect (Regression or Production Incident linked to Story)</code></pre>
+
+  <h3>Workflow Governance and State Machine</h3>
+  <p>JIRA enforces rigorous software development governance using states, transitions, conditions, and validators:</p>
+  <pre><code>[ Backlog ] ──> [ In Progress ] ──> [ Code Review ] ──> [ QA Verification ] ──> [ Released ]
+                         ▲                   │                   │
+                         └───────────────────┴─── (Reject/Reopen)┘</code></pre>
+  <ul>
+    <li><strong>Scrum Boards:</strong> Enable sprint planning, story point estimations (Fibonacci), and generate velocity charts and burndown metrics.</li>
+    <li><strong>Kanban Boards:</strong> Regulate flow using strict Work-In-Progress (WIP) limits, visualizing bottlenecks on Cumulative Flow Diagrams (CFD).</li>
+  </ul>
+
+  <h2>2.2 In-Depth Case Study: Asana</h2>
+  <p>Asana is an enterprise work management platform designed for cross-functional project planning and operational execution across technical and non-technical teams.</p>
+  <ul>
+    <li><strong>Multi-Perspective Views:</strong> The same project dataset can be toggled instantly between List View, Kanban Board, Timeline (Interactive Gantt Chart with explicit task dependencies and critical path), and Calendar View.</li>
+    <li><strong>Workload Management:</strong> Visualizes individual team member capacity, preventing burnout by highlighting overallocated staff.</li>
+    <li><strong>Workflow Automation:</strong> No-code rule engine executing <code>When [Trigger] -> If [Condition] -> Then [Action]</code> logic.</li>
+  </ul>
+
+  <h2>2.3 Multi-Criteria Comparison: JIRA vs. Asana</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Evaluation Parameter</th>
+        <th>Atlassian JIRA</th>
+        <th>Asana Work Management</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Primary Focus</strong></td>
+        <td>Software engineering, bug tracking, and formal Agile execution.</td>
+        <td>Cross-functional coordination, operational workflows, and marketing/launch tracking.</td>
+      </tr>
+      <tr>
+        <td><strong>Target Audience</strong></td>
+        <td>Software developers, QA testers, Scrum Masters, DevOps engineers.</td>
+        <td>Operations, marketing, HR, executive leadership, hybrid technical teams.</td>
+      </tr>
+      <tr>
+        <td><strong>Agile Ceremony Support</strong></td>
+        <td>Native out-of-the-box velocity charts, burndown/burnup, sprint backlogs.</td>
+        <td>Flexible boards/lists; lacks native story point burndown charts without plugins.</td>
+      </tr>
+      <tr>
+        <td><strong>Defect Lifecycle</strong></td>
+        <td>Advanced: environment details, reproduction steps, severity vs. priority matrices.</td>
+        <td>Basic: defects treated as standard tasks; lacks specialized bug fields.</td>
+      </tr>
+      <tr>
+        <td><strong>Timeline / Gantt</strong></td>
+        <td>Advanced Roadmaps (Jira Premium); powerful but complex setup.</td>
+        <td>Native, intuitive drag-and-drop Timeline with automated dependency shifts.</td>
+      </tr>
+      <tr>
+        <td><strong>Developer Tooling Sync</strong></td>
+        <td>Native deep linking with GitHub, GitLab, Bitbucket; auto-transitions on commit/PR.</td>
+        <td>Secondary developer integrations; requires third-party webhooks/Zapier.</td>
+      </tr>
+      <tr>
+        <td><strong>Learning Curve</strong></td>
+        <td>Steep; administrative and configuration complexity.</td>
+        <td>Gentle; modern consumer-grade ergonomics and immediate adoption.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ACTIVITY 3 -->
+  <h1 id="act-3">3. Writing Effective User Stories and Acceptance Criteria</h1>
+
+  <h2>3.1 The Anatomy of User Stories</h2>
+  <p>Agile replaces rigid, monolithic specification documents with lightweight <strong>User Stories</strong>. A user story represents a "token for conversation" governed by Ron Jeffries' <strong>Three C's</strong>:</p>
+  <ul>
+    <li><strong>Card:</strong> The physical or digital token capturing the story intent.</li>
+    <li><strong>Conversation:</strong> The continuous dialogue between developers, testers, and product owners to explore nuances.</li>
+    <li><strong>Confirmation:</strong> The explicit, verifiable Acceptance Criteria defining "Done."</li>
+  </ul>
+  <p>The universal Connextra format:</p>
+  <pre><code>As a &lt;persona / role&gt;,
+I want &lt;capability / action&gt;,
+so that &lt;business value / benefit&gt;.</code></pre>
+
+  <h2>3.2 The INVEST Quality Principle</h2>
+  <ul>
+    <li><strong>I - Independent:</strong> Stories can be developed and delivered in any sequence without blocking dependencies.</li>
+    <li><strong>N - Negotiable:</strong> Focuses on the "what" and "why", leaving implementation details open to team collaboration.</li>
+    <li><strong>V - Valuable:</strong> Delivers measurable, observable value to the end user or business sponsor.</li>
+    <li><strong>E - Estimable:</strong> Sufficiently well-understood for engineering teams to size with story points.</li>
+    <li><strong>S - Small:</strong> Sized to complete comfortably within a single sprint iteration (2–8 story points).</li>
+    <li><strong>T - Testable:</strong> Contains unambiguous pass/fail criteria allowing automated test verification.</li>
+  </ul>
+
+  <h2>3.3 Enterprise Domain Scenarios (StaySync Hospitality)</h2>
+  
+  <h3>Story 1: Dynamic Room Reservation Engine</h3>
+  <p><em>"As a prospective hotel guest, I want to filter available rooms by check-in date, check-out date, and category, so that I can reserve an accommodation that fits my budget."</em></p>
+  <pre><code>Scenario 1: Successful real-time room availability query
+  Given the guest is on the StaySync booking portal
+  When they select check-in "2027-04-10", check-out "2027-04-15", and category "Deluxe Suite"
+  Then the system displays all Deluxe Suites marked "Vacant Ready"
+  And calculates dynamic room rates inclusive of local luxury taxes
+  And presents an active "Reserve Now" action.
+
+Scenario 2: Conflict handling for sold-out room inventory
+  Given all "Executive Suites" are occupied between "2027-05-01" and "2027-05-03"
+  When a guest searches for "Executive Suites" for those conflicting dates
+  Then the system displays an informational banner: "No Executive Suites available for the selected dates"
+  And suggests the nearest available dates or alternative room categories.</code></pre>
+
+  <h3>Story 2: Consolidated Folio Billing (GoF Composite Pattern)</h3>
+  <p><em>"As a front-desk cashier, I want to generate a consolidated folio invoice grouping room accommodation, dining, and spa services, so that departing guests receive a transparent, itemized bill at checkout."</em></p>
+  <pre><code>Scenario 1: Aggregation of composite sub-items into master folio
+  Given Guest "John Doe" in Room 302 has incurred:
+    | Item Category      | Description         | Base Amount (INR) |
+    | Accommodation      | 3 Nights Deluxe     | 15,000            |
+    | In-Room Dining     | Room Service Dinner | 2,400             |
+    | Spa &amp; Wellness     | Swedish Massage     | 3,500             |
+  When the front-desk cashier generates the folio invoice
+  Then the Composite billing engine aggregates the subtotal as exactly 20,900 INR
+  And calculates 18% GST (3,762 INR) across applicable service categories
+  And renders the total payable balance as 24,662 INR.</code></pre>
+
+  <!-- ACTIVITY 4 -->
+  <h1 id="act-4">4. Advanced Requirement Elicitation Techniques</h1>
+
+  <h2>4.1 The Elicitation Imperative and the Requirements Iceberg</h2>
+  <p>Over 50% of software defects originate in faulty, incomplete, or ambiguous requirements. Stakeholders rarely articulate their full operational reality; they typically state the top 10–20% of explicit features (the tip of the iceberg), while 80–90% consists of <strong>tacit knowledge</strong> (habits, operational workarounds, exception handling, and shadow processes).</p>
+
+  <h2>4.2 Comprehensive Elicitation Techniques Analysis</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Technique</th>
+        <th>Primary Objective</th>
+        <th>Stakeholder Effort</th>
+        <th>Cost Factor</th>
+        <th>Tacit Discovery</th>
+        <th>Optimal Lifecycle Phase</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Interviews (Semi-Structured)</strong></td>
+        <td>Explore mental models and individual workflows through open-ended probing.</td>
+        <td>Medium (1–2 hrs per stakeholder)</td>
+        <td>Low to Moderate</td>
+        <td>Moderate</td>
+        <td>Inception &amp; Early Discovery</td>
+      </tr>
+      <tr>
+        <td><strong>Ethnography &amp; Observation</strong></td>
+        <td>Shadow users in natural work environments to uncover hidden workarounds.</td>
+        <td>Low for user; High for analyst</td>
+        <td>Moderate</td>
+        <td><strong>Very High</strong></td>
+        <td>Workflow Modeling &amp; Field Analysis</td>
+      </tr>
+      <tr>
+        <td><strong>JAD Workshops</strong></td>
+        <td>Cross-functional facilitated alignment resolving departmental disputes.</td>
+        <td>High (Multi-day commitment)</td>
+        <td>High</td>
+        <td>Moderate to High</td>
+        <td>Scope Definition &amp; Architecture</td>
+      </tr>
+      <tr>
+        <td><strong>Prototyping (Figma / React)</strong></td>
+        <td>Validate interactive flows with early throwaway or evolutionary mockups.</td>
+        <td>Medium (Usability testing)</td>
+        <td>Moderate</td>
+        <td>High</td>
+        <td>UI/UX Refinement &amp; Feasibility</td>
+      </tr>
+      <tr>
+        <td><strong>Focus Groups</strong></td>
+        <td>Capture market sentiment, customer expectations, and feature appeal.</td>
+        <td>Low (90-min session)</td>
+        <td>Moderate</td>
+        <td>Low to Moderate</td>
+        <td>Concept Exploration</td>
+      </tr>
+      <tr>
+        <td><strong>Document Analysis</strong></td>
+        <td>Mine SOPs, regulatory standards, paper audit logs, and legacy schemas.</td>
+        <td>Very Low (Independent analysis)</td>
+        <td>Low</td>
+        <td>Low</td>
+        <td>Project Feasibility &amp; Kickoff</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4.3 Real-World Field Discovery in StaySync</h2>
+  <ul>
+    <li><strong>Contextual Inquiry at Front Desk:</strong> Analysts observed receptionists placing pink sticky notes on computer screens to notify housekeepers of checkouts because the legacy software took 6 clicks to update room status. <em>Engineered Solution:</em> A 1-click Express Checkout action that automatically dispatches a WebSocket notification to housekeeping tablets.</li>
+    <li><strong>JAD Workshop for Composite Folio Billing:</strong> Resolved conflict between F&B (wanted table payment) and Front Desk (wanted room billing) by adopting the <strong>GoF Composite Pattern</strong> with automated guest credit limit validation.</li>
+  </ul>
+
+  <!-- ACTIVITY 5 -->
+  <h1 id="act-5">5. Requirement Traceability Matrix (RTM)</h1>
+
+  <h2>5.1 Concept and Traceability Taxonomy</h2>
+  <p>The <strong>Requirement Traceability Matrix (RTM)</strong> is an authoritative engineering document establishing an unbroken, bidirectional link between requirements, architectural components, source code modules, and test verification cases.</p>
+  <ul>
+    <li><strong>Forward Traceability:</strong> Traces from Requirement $	o$ Design $	o$ Code $	o$ Test Case. Guarantees <em>completeness</em> (no requirement was forgotten).</li>
+    <li><strong>Backward Traceability:</strong> Traces from Test Case / Code $	o$ Requirement. Guarantees <em>justification</em> (prevents gold plating and unauthorized code).</li>
+    <li><strong>Bidirectional Traceability:</strong> The union of both, enabling 360-degree auditability and automated Change Impact Analysis.</li>
+  </ul>
+
+  <h2>5.2 StaySync Industrial-Grade RTM Table</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Req ID</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Design Pattern / Architecture</th>
+        <th>Source Code Module</th>
+        <th>Test ID</th>
+        <th>Verification Method</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>REQ-AUTH-01</strong></td>
+        <td>JWT authentication &amp; RBAC enforcement.</td>
+        <td><span class="badge badge-primary">Must</span></td>
+        <td>Stateless Session Interceptor</td>
+        <td><code>backend/app/core/security.py</code></td>
+        <td><code>TC-AUTH-01</code></td>
+        <td>White-Box Unit Test</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-AUTH-02</strong></td>
+        <td>Consumer-Provider API contract compliance.</td>
+        <td><span class="badge badge-primary">Must</span></td>
+        <td>Pydantic Schema Validation Layer</td>
+        <td><code>backend/app/schemas/token.py</code></td>
+        <td><code>TC-AUTH-02</code></td>
+        <td>Pact Contract Testing</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-RES-01</strong></td>
+        <td>Atomic room availability &amp; date conflict check.</td>
+        <td><span class="badge badge-primary">Must</span></td>
+        <td>Repository Pattern with SQL Locks</td>
+        <td><code>backend/app/crud/crud_res.py</code></td>
+        <td><code>TC-RES-01</code></td>
+        <td>Basis Path Test ($V(G)=4$)</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-RES-02</strong></td>
+        <td>Automated end-to-end guest check-in flow.</td>
+        <td><span class="badge badge-warning">Should</span></td>
+        <td>Custom Toast UX (No Alerts)</td>
+        <td><code>frontend/src/CheckInModal.tsx</code></td>
+        <td><code>TC-RES-02</code></td>
+        <td>Playwright E2E Automation</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-BIL-01</strong></td>
+        <td>Dynamic hierarchical composite folio billing.</td>
+        <td><span class="badge badge-primary">Must</span></td>
+        <td><strong>GoF Composite Pattern</strong></td>
+        <td><code>backend/app/patterns/composite.py</code></td>
+        <td><code>TC-BIL-01</code></td>
+        <td>Mathematical Precision Unit</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-PAY-01</strong></td>
+        <td>Dynamic payment gateway switching.</td>
+        <td><span class="badge badge-primary">Must</span></td>
+        <td><strong>GoF Factory Method Pattern</strong></td>
+        <td><code>backend/app/patterns/payment_factory.py</code></td>
+        <td><code>TC-PAY-01</code></td>
+        <td>Polymorphic Unit Tests</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-NOT-01</strong></td>
+        <td>Multi-channel notification dispatch.</td>
+        <td><span class="badge badge-warning">Should</span></td>
+        <td><strong>GoF Bridge Pattern</strong></td>
+        <td><code>backend/app/patterns/notification_bridge.py</code></td>
+        <td><code>TC-NOT-01</code></td>
+        <td>Mock Channel Integration</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-DB-01</strong></td>
+        <td>Thread-safe database connection pool.</td>
+        <td><span class="badge badge-primary">Must</span></td>
+        <td><strong>GoF Singleton Pattern</strong></td>
+        <td><code>backend/app/db/session.py</code></td>
+        <td><code>TC-DB-01</code></td>
+        <td>Multi-Thread Concurrency Assert</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+      <tr>
+        <td><strong>REQ-MUT-01</strong></td>
+        <td>High fault-detection test sensitivity.</td>
+        <td><span class="badge badge-warning">Should</span></td>
+        <td>Comprehensive PyTest Test Suite</td>
+        <td><code>tests/</code> directory</td>
+        <td><code>TC-MUT-01</code></td>
+        <td>Mutmut Mutation Testing</td>
+        <td><span class="badge badge-success">Passed</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ACTIVITY 6 -->
+  <h1 id="act-6">6. Tools for Requirement Management</h1>
+
+  <h2>6.1 The Engineering Case for Dedicated RM Systems</h2>
+  <p>Static documents (MS Word, Excel, PDFs) fail in complex systems due to version collisions (<code>SRS_final_v2_FINAL.docx</code>), broken links, untracked changes, and lack of real-time auditability. Dedicated RM platforms provide database-driven living requirements with rich metadata and cryptographic baselines.</p>
+
+  <h2>6.2 Comprehensive Platform Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Primary Focus</th>
+        <th>Traceability Rigor</th>
+        <th>Regulatory Compliance</th>
+        <th>Collaboration UX</th>
+        <th>Best Fit Enterprise Profile</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>IBM DOORS Next</strong></td>
+        <td>Aerospace, Defense, Automotive, Rail.</td>
+        <td><strong>Exceptional:</strong> OSLC linked data, suspect link tracking.</td>
+        <td>Native support for DO-178C, ISO 26262, IEC 61508.</td>
+        <td>Complex; steep learning curve.</td>
+        <td>Safety-critical hardware/software systems engineering.</td>
+      </tr>
+      <tr>
+        <td><strong>Atlassian JIRA + Confluence</strong></td>
+        <td>Commercial Web, Mobile, Cloud SaaS.</td>
+        <td><strong>Moderate to High:</strong> Excellent with Xray/Zephyr plugins.</td>
+        <td>Requires specialized 3rd-party compliance add-ons.</td>
+        <td><strong>Market-Leading:</strong> High adoption, consumer UX.</td>
+        <td>Fast-moving Agile product teams building commercial web apps.</td>
+      </tr>
+      <tr>
+        <td><strong>Azure DevOps (Boards &amp; Test Plans)</strong></td>
+        <td>Enterprise Cloud IT, Cross-Platform.</td>
+        <td><strong>High:</strong> Work-item-to-commit-and-pipeline native links.</td>
+        <td>Strong support for CMMI, SOC2, ISO 27001.</td>
+        <td>Clean, developer-friendly interface.</td>
+        <td>Enterprises standardized on Microsoft Azure ecosystems.</td>
+      </tr>
+      <tr>
+        <td><strong>Jama Connect</strong></td>
+        <td>Medical Devices, Robotics, Space, Automotive.</td>
+        <td><strong>Exceptional:</strong> Living traceability &amp; automated coverage.</td>
+        <td>Built-in FDA 21 CFR Part 11, ISO 14971, ISO 26262.</td>
+        <td>Modern, collaborative Review Center.</td>
+        <td>Product engineering with strict safety &amp; risk analysis mandates.</td>
+      </tr>
+      <tr>
+        <td><strong>Perforce Helix ALM</strong></td>
+        <td>Medical, Embedded Systems, Gaming.</td>
+        <td><strong>High:</strong> Tripartite linking (Requirements, Tests, Issues).</td>
+        <td>Strong medical and functional safety compliance.</td>
+        <td>Traditional desktop and modern web client.</td>
+        <td>Teams seeking unified RM, test management, and defect tracking.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ACTIVITY 7 & 8 -->
+  <h1 id="act-7">7. Overall SDLC Integration & Synthesis</h1>
+  <pre><code>THE UNIFIED SOFTWARE ENGINEERING LIFECYCLE:
+Stakeholder Needs &amp; Domain Reality
+       │
+       ▼  [Activity 4: Advanced Elicitation — Ethnography, JAD, Interviews]
+Discovered Tacit &amp; Explicit Requirements
+       │
+       ▼  [Activity 3: Agile Requirements — INVEST Criteria &amp; BDD Gherkin]
+User Stories &amp; Acceptance Criteria
+       │
+       ├───► [Activity 6: Requirement Management Database (DOORS / Jira)]
+       ├───► [Activity 2: Agile Project Execution (JIRA Sprints &amp; Asana Timelines)]
+       │
+       ▼  [Activity 5: Bidirectional Requirement Traceability Matrix]
+RTM (Req ID ──> GoF Design Patterns ──> Source Code ──> Automated Tests)
+       │
+       ▼  [Software Architecture &amp; Implementation]
+FastAPI / React MVC Architecture + GoF Design Patterns
+       │
+       ▼  [Activity 1: DevOps CI/CD &amp; Automated Verification]
+Automated Testing (Basis Path, Playwright, Pact, Mutmut) ──> Zero-Downtime Deploy ──> APM Telemetry
+       ▲                                                                                   │
+       └──────────────────────── Continuous Feedback into Next Agile Sprint ───────────────┘</code></pre>
+
+  <h1 id="act-8">8. Conclusion & References</h1>
+  <h2>8.1 Formal Conclusion</h2>
+  <p>This comprehensive self-learning report synthesizes the foundational pillars of Software Engineering and Architecture. By connecting requirements elicitation, user story authoring, requirement governance tools, agile sprint execution, bidirectional traceability, and continuous delivery pipelines, it demonstrates how complex modern applications—such as the <strong>StaySync Hospitality Management System</strong>—achieve both commercial delivery agility and enterprise-grade architectural reliability.</p>
+
+  <h2>8.2 References and Bibliography</h2>
+  <ol>
+    <li>Beck, K., et al. (2001). <em>Manifesto for Agile Software Development</em>.</li>
+    <li>Kim, G., Humble, J., Debois, P., &amp; Willis, J. (2016). <em>The DevOps Handbook</em>. IT Revolution Press.</li>
+    <li>Humble, J., &amp; Farley, D. (2010). <em>Continuous Delivery</em>. Addison-Wesley.</li>
+    <li>Cohn, M. (2004). <em>User Stories Applied: For Agile Software Development</em>. Addison-Wesley.</li>
+    <li>Wake, B. (2003). <em>INVEST in Good Stories, and SMART Tasks</em>. XP123 Exploration Series.</li>
+    <li>North, D. (2006). <em>Introducing BDD (Behavior-Driven Development)</em>. Better Software Magazine.</li>
+    <li>Sommerville, I. (2015). <em>Software Engineering</em> (10th ed.). Pearson Education.</li>
+    <li>Pressman, R. S., &amp; Maxim, B. R. (2020). <em>Software Engineering: A Practitioner's Approach</em> (9th ed.). McGraw-Hill.</li>
+    <li>IEEE Computer Society. (1990). <em>IEEE Std 610.12-1990: Glossary of Software Engineering Terminology</em>.</li>
+    <li>Gamma, E., Helm, R., Johnson, R., &amp; Vlissides, J. (1994). <em>Design Patterns: Elements of Reusable Object-Oriented Software</em>. Addison-Wesley.</li>
+  </ol>
+
+</div>
+
+</body>
+</html>
